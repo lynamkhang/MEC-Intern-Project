@@ -1,0 +1,177 @@
+ <!-- Application info form -->
+ <div class="grid-container" id="applicationInfo">
+
+    <!-- Navigation bar -->
+    <nav class="navbar">
+        <div class="nav-item-active">申請情報</div>
+        <div class="nav-item">所得区分判定</div>
+        <div class="nav-item">補装具情報</div>
+        <div class="nav-item">電子ファイル</div>
+    </nav>
+
+    <div class="data-display" id="data1"></div>
+
+    <div class="item" id="targetGroup">対象者区分</div>
+    <div id="targetGroupData">
+        {% include "components/Combobox.html" with combobox_id="targetCategory" selected_value=data.targetID selected_text=data.targetName options=combobox_data.targetcategory %}
+    </div>
+
+    <div class="item" id="reason">申請事由</div>
+    <div id="reasonData">
+        {% include "components/Combobox.html" with combobox_id="registerReason" selected_value=data.reReasonID selected_text=data.reReasonName options=combobox_data.registerreason %}
+    </div>
+
+    <div class="item" id="acceptanceDate">受理日</div>
+    <div class="data-display" id="acceptanceDateData">
+        <input type="date" value="{{data.acceptDate}}">
+    </div>
+
+    <div class="item" id="paymentMethod">支払方式</div>
+    <div id="paymentMethodData">
+        {% include "components/Combobox.html" with combobox_id="paymentInfo" selected_value=data.paymentID selected_text=data.paymentType options=combobox_data.paymentinfo %}
+    </div>
+
+    <div class="item" id="rejectReason">却下理由</div>
+    <div id="rejectReasonData">
+        {% include "components/Combobox.html" with combobox_id="rejectInfo" selected_value=data.rejectID selected_text=data.rejectType options=combobox_data.rejectinfo %}
+    </div>
+
+    <div class="item" id="remark">決裁用備考</div>
+    <div class="data-display" id="remarkData">
+        <p>{{data.remark}}</p>
+    </div>
+    <div class="data-display" id="noteButtonHolder">
+        <button class="note-button">備考</button>
+    </div>
+    
+
+    <div class="item" id="draftDate">起案日</div>
+    <div class="data-display" id="draftDateData">
+        <input type="date" value="{{data.draftDate}}">
+    </div>
+
+    <div class="item" id="applicationDate">申請年月日</div>
+    <div class="data-display" id="applicationDateData">
+        <input type="date" value="{{data.registerDate}}">
+    </div>
+
+    <div class="item" id="acceptNumber">受理番号</div>
+    <div class="data-display" id="acceptNumberData">
+        <p>{{data.acceptNumber}}</p>
+    </div>
+
+    <div class="item" id="decision">決定区分</div>
+    <div id="decisionData">
+        {% include "components/Combobox.html" with combobox_id="decisionInfo" selected_value=data.decisionID selected_text=data.decisionType options=combobox_data.decisioninfo %}
+    </div>
+
+    <div class="item" id="otherReason">その他理由</div>
+    <div class="data-display" id="otherReasonData">
+        <p>{{data.otherReason}}</p>
+    </div>
+
+    <div class="item" id="draftPerson">起案者</div>
+    <div id="draftPersonData">
+        {% include "components/Combobox.html" with combobox_id="draftPersonInfo" selected_value=data.draftPersonID selected_text=data.draftPersonName options=combobox_data.draftpersoninfo %}
+    </div>
+
+    <div class="item" id="registerPerson">申請者</div>
+    <div id="registerPersonData">
+        {% include "components/Combobox.html" with combobox_id="registerPersonInfo" selected_value=data.registerPersonID selected_text=data.registerPersonName options=combobox_data.registerpersoninfo %}
+    </div>
+
+    <div class="item" id="closingDate">決蔽日</div>
+    <div class="data-display" id="closingDateData">
+        <input type="date" value="{{data.closingDate}}">
+    </div>
+
+    <div class="item" id="paymentDate">支給決定日</div>
+    <div class="data-display" id="paymentDateData">
+        <input type="date" value="{{data.paymentDate}}">
+    </div>
+
+    <div class="item" id="kannai">管内別</div>
+    <div id="kannaiData">
+        {% include "components/Combobox.html" with combobox_id="kannaiInfo" selected_value=data.kannaiID selected_text=data.kannaiType options=combobox_data.kannaiinfo %}
+    </div>
+
+    <div class="item" id="caseNumber">ケース番号</div>
+    <div class="data-display" id="caseNumberData">
+        <p>{{data.caseNumber}}</p>
+    </div>
+    
+    <div class="item" id="paymentNumber">支給番号</div>
+    <div class="data-display" id="paymentNumberData">
+        <p>{{data.paymentNumber}}</p>
+    </div>
+    
+    <!--Guardian info form-->
+    <div class="title" id="parentInfoTitle">
+        <b>保護者情報</b>
+    </div>
+
+    <div class="display-person-no" id="guardianInfoNoDisplay">
+        <button id="btnDisplayPersonNo">個人番号表示</button>
+    </div>
+
+    <div class="scroll-container">
+        <div class="item" id="guardianId">宛名番号</div>
+        <div class="data-display" id="guardianIdData">
+            <p>{{data.gurdianID}}</p>
+        </div>
+
+        <div class="data-display" id="data2"></div>
+    
+        <div class="item" id="parentName">氏名</div>
+    
+        <div class="item" id="parentNameKana">カナ</div>
+        <div class="data-display" id="parentNameKanaData">
+            <p>{{data.gurdianKataName}}</p>
+        </div>
+    
+        <div class="item" id="parentNameKanji">漢字</div>
+        <div class="data-display" id="parentNameKanjiData">
+            <p>{{data.gurdianKanjiName}}</p>
+        </div>
+    
+        <div class="item" id="parentAddress">住所</div>
+        <div class="data-display" id="parentAddressData">
+            <p>{{data.gurPostalNo}}</p>
+            <div class="image-container" id="imgLens"></div>
+        </div>
+    
+        <div class="item" id="postAddress">〒住所</div>
+        <div class="data-display" id="postAddressData"></div>
+    
+        <div class="item" id="householdNumber">世帯番号</div>
+        <div class="data-display" id="householdNumberData">
+            <p>{{data.familyId}}</p>
+        </div>
+    
+        <div class="item" id="parentBirthday">生年月日.年齢.性別</div>
+        <div class="data-display" id="parentBirthdayData">
+            <p></p>
+        </div>
+        <div class="data-display" id="buttonHolder">
+            <button class="search-guardian-button">保護者検索(F)</button>
+            <button class="clear-button">クリア(C)</button>
+        </div>
+        
+        <div class="item" id="parentJob">職業</div>
+        <div id="parentJobData">
+            {% include "components/Combobox.html" with combobox_id="gurJob" selected_value=data.gurJobId selected_text=data.jobType options=combobox_data.jobcategory %}
+        </div>
+    
+        <div class="item" id="relation">続柄</div>
+        <div id="relationData">
+            {% include "components/Combobox.html" with combobox_id="gurRelationship" selected_value=data.gurRelationshipId selected_text=data.relationshipType options=combobox_data.relationship %}
+        </div>
+    
+        <div class="item" id="parentPhone">電話番号</div>
+        <div class="data-display" id="parentPhoneData">
+            <p>{{data.gurPhoneNo}}</p>
+        </div>
+
+        <div class="data-display" id="temp">test</div>
+    </div>
+</div>

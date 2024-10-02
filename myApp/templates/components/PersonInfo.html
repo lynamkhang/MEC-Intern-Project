@@ -1,0 +1,120 @@
+<!-- Person info form -->
+<div class="grid-container" id="personInfoContainer">
+    <div class="grid-container" id="personInfo">                
+        <div class="title" id="personInfoTitle">
+            <b>障害者情報</b>
+        </div>
+    
+        <div class="item" id="name">氏名</div>
+        <div class="data-display" id="nameKana">
+            <p>{{data.personNameKana}}</p>
+        </div>
+        <div class="data-display" id="nameKanji">
+            <p>{{data.personNameKanji}}</p>
+        </div>
+    
+        <div class="item" id="address">住所</div>
+    
+        <div class="item" id="address1">カナ</div>
+        <div class="data-display" id="address1Data">
+            <p>　</p>
+        </div>
+    
+        <div class="item" id="address2">漢字</div>
+        <div class="data-display" id="address2Data">
+            <p>{{data.personAddress}}</p>
+        </div>
+    
+        <div class="item" id="address3">方書</div>
+        <div class="data-display" id="address3Data">
+            <p>　</p>
+        </div>
+    
+        <div class="item" id="birthday">生年月日</div>
+        <div class="data-display" id="birthdayData">
+            <p>{{data.personBD}}</p>
+        </div>
+    
+        <div class="item" id="relationship">統柄</div>
+        <div id="relationshipData">
+            {% include "components/Combobox.html" with combobox_id="PerRelationship" selected_value=data.relationshipId selected_text=data.relationshipType options=combobox_data.relationship %}
+        </div>
+    
+        <div class="item" id="job">職業</div>
+        <div id="jobData">
+            {% include "components/Combobox.html" with combobox_id="JobCategory" selected_value=data.jobId selected_text=data.jobType options=combobox_data.jobcategory %}
+        </div>
+        
+    
+        <div class="item" id="phone">電話番号</div>
+        <div class="data-display" id="phoneData">
+            <p>{{data.phoneNo}}</p>
+        </div>
+    </div>
+
+    <div class="grid-container" id="personDiseaseInfo">
+        <div class="display-person-no" id="personInfoNoDisplay">
+            <button id="btnDisplayPersonNo">個人番号表示</button>
+            <b>宛名番号: {{data.mailAddressNo}}</b>
+            <b>世帯番号: {{data.familyId}}</b>
+            <b>履歴数:新規/{{data.noOfHistory}} </b>
+        </div>
+
+        <div class="item" id="ticket">手帳番号</div>
+        <div class="data-display" id="ticketData">
+            <p>{{data.ticketNumber}}</p>
+        </div>
+        
+        <div class="item" id="issue">交付目</div>
+        <div class="data-display" id="issueData">
+            <input id="txtIssueDate" value="{{data.issueDate}}" readonly>
+        </div>
+        
+        <div class="item" id="case">ケース番号</div>
+        <div class="data-display" id="caseData">
+            <p>{{data.caseNumber}}</p>
+        </div>
+        
+        <div class="table-section">
+            <table>
+                <thead>
+                    <tr>
+                        <th>CHK</th>
+                        <th>原傷病名</th>
+                        <th>障害部位及び程度</th>
+                        <th>陳古区分</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="item" id="disease">難病情報</div>
+        <div class="data-display" id="diseaseData">
+            <p>{{data.diseaseInfo}}</p>
+        </div>
+                        
+        <div class="data-display" id="acquisitionButtonHolder">
+            <button class="get-lastest-acquisition-button">最新取得</button>
+        </div>
+    </div>   
+</div>

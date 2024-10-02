@@ -1,0 +1,718 @@
+* {
+    font-family:"Segoe UI";
+}
+
+body {
+    background: linear-gradient(0deg, rgb(39, 60, 193), rgb(38, 179, 231)) no-repeat;
+    overflow: hidden;
+}
+
+.container {
+    background-color: rgb(205, 234, 238);
+    padding: 6px 6px 0 6px;
+    border-radius: 10px;
+    min-height: 680px;
+}
+
+.grid-container {
+    display: grid;
+    background-color: rgb(243, 245, 246);
+    padding: 8px;
+    border: 1px solid rgb(210, 212, 212);
+    border-radius: 10px;
+}
+
+.item {
+    background-color: rgb(185, 226, 232);
+    text-align: center;
+    padding: 3px;
+    font-size: 13px;
+    border: 1px solid rgb(210, 212, 212);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.data-display {
+    background-color: white;
+    border: 1px solid rgb(210, 212, 212);
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+
+.data-display > p {
+    margin: 5px;
+    font-size: 12px;
+}
+
+input {
+    font-family: "Segoe UI";
+    font-size: 12px;
+}
+
+.title {
+    display: flex;
+    white-space: nowrap;
+    align-items: center;
+}
+
+b {
+    font-size: 13px;
+}
+
+.display-person-no {
+    display: flex;
+    align-items: center;
+}
+
+.image-container {
+    width: 25px;
+    height: 30px;
+    border: 2px solid rgb(210, 212, 212);
+    background-size: contain;
+    margin-left: auto;
+    cursor: pointer;
+}
+
+#imgLens {
+    background-image: url(images/lens.jpg);
+}
+
+#txtIssueDate {
+    width: 95%;
+    height: 85%;
+    border: 1px solid lightblue;
+    border-radius: 0;
+}
+
+/*person-info form*/
+
+#personInfoContainer {
+    display: flex;
+    flex-direction: row; 
+    justify-content: space-between; 
+    align-items: stretch; 
+    gap: 0; 
+    margin: 0; 
+    padding: 0 0 6px 0; 
+}
+
+#personInfo, 
+#personDiseaseInfo {
+    flex: 1; 
+    display: grid;
+    grid-template-columns: repeat(12, 1fr); 
+    grid-template-rows: repeat(7, 2em); 
+    border: none;
+    padding: 0; 
+    box-sizing: border-box;
+}
+
+#personInfo {    
+    margin: 6px 0 8px 8px;
+    grid-template-rows: repeat(7, 32px); 
+    grid-template-areas: 
+    
+    "t  t   t   t   t     t     t      t    t      t    t      t  "
+    "a  a   a   a   nkn   nkn   nkn    nkn  nkn    nkn  nkn    nkn"
+    "a  a   a   a   nkj   nkj   nkj    nkj  nkj    nkj  nkj    nkj" 
+    "b  b   c   c   ad1   ad1   ad1    ad1  ad1    ad1  ad1    ad1"
+    "b  b   d   d   ad2   ad2   ad2    ad2  ad2    ad2  ad2    ad2"
+    "b  b   e   e   ad3   ad3   ad3    ad3  ad3    ad3  ad3    ad3"
+    "f  f   f   f   bdd   bdd   bdd    g    g      lsd  lsd    lsd"
+    "h  h   h   h   jbd   jbd   jbd    i    i      pnd  pnd    pnd";
+}
+
+#personDiseaseInfo {
+    margin: 6px 8px 8px 0;
+    grid-template-rows: 32px 36px repeat(4, 30px) 34px; 
+    grid-template-areas:
+    "0      0      0      0      pin   pin   pin   pin     pin     pin    pin    pin" 
+    "j      j      j      j      ntd   ntd   ntd   ntd     ntd     ntd    ntd    ntd"
+    "k      k      k      k      isd   isd   l     l       csd     csd    abh    abh"
+    "tbl    tbl    tbl    tbl    tbl   tbl   tbl   tbl     tbl     tbl    tbl    tbl"
+    "tbl    tbl    tbl    tbl    tbl   tbl   tbl   tbl     tbl     tbl    tbl    tbl"
+    "tbl    tbl    tbl    tbl    tbl   tbl   tbl   tbl     tbl     tbl    tbl    tbl"
+    "tbl    tbl    tbl    tbl    tbl   tbl   tbl   tbl     tbl     tbl    tbl    tbl"
+    "m      m      m      m      dsd   dsd   dsd   dsd     dsd     dsd    dsd    dsd";
+}
+
+#personInfoTilte {
+    grid-area: t;
+}
+
+#personInfoNoDisplay {
+    grid-area: pin;
+    padding: 2px;
+    gap: 10px;
+}
+
+#name {
+    grid-area: a;
+}
+
+#address {
+   grid-area: b;
+}
+
+#address1 {
+   grid-area: c;
+ }
+
+ #address2 {
+    grid-area: d;
+ }
+
+ #address3 {
+    grid-area: e;
+ }
+
+#birthday {
+    grid-area: f;
+}
+
+#relationship {
+    grid-area: g;
+}
+
+#job {
+    grid-area: h;
+}
+
+#phone {
+    grid-area: i;
+}
+
+#ticket {
+    grid-area: j;
+}
+
+#issue {
+    grid-area: k;
+}
+
+#case {
+    grid-area: l;
+}
+
+#disease {
+    grid-area: m;
+}
+
+/*person-info form items*/
+#nameKanji {
+    grid-area: nkj;
+}
+
+#nameKana {
+    grid-area: nkn;
+}
+
+#address1Data {
+    grid-area: ad1;
+}
+
+#address2Data {
+    grid-area: ad2;
+}
+
+#address3Data {
+    grid-area: ad3;
+}
+
+#birthdayData {
+    grid-area: bdd;
+}
+
+#jobData {
+    grid-area: jbd;
+}
+
+#relationshipData {
+    grid-area: lsd;
+}
+
+#phoneData {
+    grid-area: pnd;
+}
+
+#ticketData {
+    grid-area: ntd;
+}
+
+#issueData {
+    grid-area: isd;
+}
+
+#caseData {
+    grid-area: csd;
+}
+
+#diseaseData {
+    grid-area: dsd;
+}
+
+#acquisitionButtonHolder {
+    grid-area: abh;
+}
+
+.table-section {
+    grid-area: tbl;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+th {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid lightblue;
+    font-size: 12px;
+}
+
+td {
+    padding: 16px;
+}
+  
+thead {
+    background-color: rgb(185, 226, 232); 
+}
+  
+tbody {
+    border: 1px solid rgb(210, 212, 212);
+}
+
+
+/*application-info form*/
+
+#applicationInfo {
+    grid-template-columns: repeat(24, 1fr);
+    grid-template-rows: repeat(12, 2em);
+
+    grid-template-areas: 
+    "nav    nav    nav    nav   nav   nav    nav    nav    nav    nav    nav    nav    nav    nav    nav    nav    nav    nav   nav    nav    nav   nav    nav    nav"
+    "tgp    tgp    tgp    tgd   tgd   tgd    dft    dft    dft    ddd    ddd    ddd    aut    aut    aut    aud    aud    aud   jdt    jdt    jdt   jdd    jdd    jdd"
+    "res    res    res    rsd   rsd   rsd    apd    apd    apd    ald    ald    ald    alc    alc    alc    and    and    and   da1    da1    da1   da1    da1    da1"
+    "acd    acd    acd    atd   atd   atd    rcp    rcp    rcp    rnd    rnd    rnd    dec    dec    dec    ded    ded    ded   csn    csn    csn   cnd    cnd    cnd"
+    "pmt    pmt    pmt    pmd   pmd   pmd    dtc    dtc    dtc    dcd    dcd    dcd    pde    pde    pde    pdd    pdd    pmn   pmn    pmn    pad   pad    pad    pad"   
+    "rrs    rrs    rrs    rrd   rrd   rrd    rrd    rrd    rrd    lcr    lcr    lcr    lrd    lrd    lrd    lrd    lrd    lrd   lrd    lrd    lrd   lrd    lrd    lrd"
+    "ktn    ktn    ktn    ktn   knd   knd    knd    knd    knd    knd    knd    knd    knd    knd    knd    knd    knd    knd   knd    knd    knd   knd    nbh    nbh"
+    "pit    pit    pit    pit   pit   pit    pit    pit    pit    pit    pit    pit    pit    pit    pit    pit    pit    pit   pit    pit    pit   pit    gid    gid"
+    "scr    scr    scr    scr   scr   scr    scr    scr    scr    scr    scr    scr    scr    scr    scr    scr    scr    scr   scr    scr    scr   scr    scr    scr"
+    "scr    scr    scr    scr   scr   scr    scr    scr    scr    scr    scr    scr    scr    scr    scr    scr    scr    scr   scr    scr    scr   scr    scr    scr"
+    "scr    scr    scr    scr   scr   scr    scr    scr    scr    scr    scr    scr    scr    scr    scr    scr    scr    scr   scr    scr    scr   scr    scr    scr"
+    "scr    scr    scr    scr   scr   scr    scr    scr    scr    scr    scr    scr    scr    scr    scr    scr    scr    scr   scr    scr    scr   scr    scr    scr";
+}
+
+/*application-info items*/
+.navbar {
+    background-color:rgb(243, 245, 246);         
+    display: flex;       
+    grid-area: nav;
+}
+
+.nav-item{
+    padding: 10px;         
+    font-size: 13px; 
+    width: auto;
+    height: 10px;           
+    color: #333;               
+    cursor: pointer;            
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    background-color: rgb(220, 222, 220);    
+    border-right: 3px solid green;
+    display: flex;              
+    justify-content: center;     
+    align-items: center;
+}
+
+.nav-item-active {
+    padding: 10px; 
+    background-color: white;
+    font-size: 13px; 
+    width: 80px;
+    height: 10px; 
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    padding: 10px;         
+    color: #000;
+    display: flex;                  
+    justify-content: center;     
+    align-items: center;         
+}
+
+.nav-item:hover {
+    background-color: white;  
+}
+
+#data1 {
+    grid-area: da1;
+}
+
+#data2 {
+    grid-area: da2;
+}
+
+#targetGroup {
+    grid-area: tgp;
+}
+
+#reason {
+    grid-area: res;
+}
+
+#acceptanceDate {
+    grid-area: acd;
+}
+
+#paymentMethod {
+    grid-area: pmt;
+}
+
+#rejectReason {
+    grid-area: rrs;
+}
+
+#remark {
+    grid-area: ktn;
+}
+
+#draftDate {
+    grid-area: dft;
+}
+
+#applicationDate {
+    grid-area: apd;
+}
+
+#acceptNumber {
+    grid-area: rcp;
+}
+
+#decision {
+    grid-area: dtc;
+}
+
+#otherReason {
+    grid-area: lcr;
+}
+
+#draftPerson {
+    grid-area: aut;
+}
+
+#registerPerson {
+    grid-area: alc;
+}
+
+#closingDate {
+    grid-area: dec;
+}
+
+#paymentDate {
+    grid-area: pde;
+}
+
+#kannai {
+    grid-area: jdt;
+}
+
+#caseNumber {
+    grid-area: csn;
+}
+
+#paymentNumber {
+    grid-area: pmn;
+}
+
+#targetGroupData {
+    grid-area: tgd;
+}
+
+#reasonData {
+    grid-area: rsd;
+}
+
+#acceptanceDateData {
+    grid-area: atd;
+}
+
+#paymentMethodData {
+    grid-area: pmd;
+}
+
+#rejectReasonData {
+    grid-area: rrd;
+}
+
+#remarkData {
+    grid-area: knd;
+}
+
+#draftDateData {
+    grid-area: ddd;
+}
+
+#applicationDateData {
+    grid-area: ald;
+}
+
+#acceptNumberData {
+    grid-area: rnd;
+}
+
+#decisionData {
+    grid-area: dcd;
+}
+
+#otherReasonData {
+    grid-area: lrd;
+}
+
+#draftPersonData {
+    grid-area: aud;
+}
+
+#registerPersonData {
+    grid-area: and;
+}
+
+#closingDateData {
+    grid-area: ded;
+}
+
+#paymentDateData {
+    grid-area: pdd;
+}
+
+#kannaiData {
+    grid-area: jdd;
+}
+
+#caseNumberData {
+    grid-area: cnd;
+}
+
+#paymentNumberData {
+    grid-area: pad;
+}
+
+#noteButtonHolder {
+    grid-area: nbh;
+}
+
+/*Parent info form*/
+#parentInfoTitle {
+    grid-area: pit;
+}
+
+#guardianInfoNoDisplay {
+    grid-area: gid;
+}
+
+#guardianId {
+    grid-area: adn;
+}
+
+#parentName {
+    grid-area: prn;
+}
+
+#parentNameKana {
+    grid-area: pkn;
+}
+
+#parentNameKanji {
+    grid-area: pkj;
+}
+
+#parentAddress {
+    grid-area: par;
+}
+
+#postAddress {
+    grid-area: poa;
+}
+
+#householdNumber {
+    grid-area: hhn;
+}
+
+#parentBirthday {
+    grid-area: pbd;
+}
+
+#parentJob {
+    grid-area: prj;
+}
+
+#relation {
+    grid-area: rlt;
+}
+
+#parentPhone {
+    grid-area: prp;
+}
+
+#guardianIdData {
+    grid-area: ard;
+}
+
+#parentNameKanaData {
+    grid-area: nad;
+}
+
+#parentNameKanjiData {
+    grid-area: njd;
+}
+
+#parentAddressData {
+    grid-area: dpd;
+}
+
+#postAddressData {
+    grid-area: pod;
+}
+
+#householdNumberData {
+    grid-area: hnd;
+}
+
+#parentBirthdayData {
+    grid-area: rbd;
+}
+
+#parentJobData {
+    grid-area: pjd;
+}
+
+#relationData {
+    grid-area: rtd;
+}
+
+#parentPhoneData {
+    grid-area: ppd;
+}
+
+#buttonHolder {
+    grid-area: bth;
+}
+
+.scroll-container {
+    overflow-y: auto;
+    grid-area: scr;
+    display: grid;
+    grid-template-columns: repeat(24, 1fr);
+    grid-template-rows: repeat(5, 2em);
+    grid-template-areas: 
+    "adn    adn    adn    ard   ard   ard    hhn    hhn    hhn    hnd    hnd    hnd    pbd    pbd    pbd    rbd    rbd    rbd   bth    bth    bth   bth    bth    bth"
+    "prn    prn    pkn    pkn   nad   nad    nad    nad    nad    nad    nad    nad    prj    prj    prj    pjd    pjd    pjd   prp    prp    ppd   ppd    ppd    ppd"
+    "prn    prn    pkj    pkj   njd   njd    njd    njd    njd    njd    njd    njd    rlt    rlt    rlt    rtd    rtd    rtd   rtd    da2    da2   da2    da2    da2"
+    "par    par    poa    poa   dpd   dpd    dpd    dpd    dpd    dpd    dpd    pod    pod    pod    pod    pod    pod    pod   pod    pod    pod   pod    pod    pod"
+    "sss    sss    sss    sss   sss   sss    sss    sss    sss    sss    sss    sss    sss    sss    sss    sss    sss    sss   sss    sss    sss   sss    sss    sss";
+}
+
+#temp {
+    grid-area: sss;
+}
+
+/*Buttons*/
+
+.get-lastest-acquisition-button {
+    background: linear-gradient(to top, rgb(210, 204, 193), rgb(163, 162, 155));
+    border: none;
+    font-size: 13px;
+    text-align: center;
+    border-radius: 5px;
+    margin: 5px;
+    width: 75px;
+    height: 25px;
+    cursor: pointer;
+}
+
+.note-button {
+    background: linear-gradient(to top, rgb(210, 204, 193), rgb(163, 162, 155));
+    border: none;
+    font-size: 13px;
+    text-align: center;
+    border-radius: 5px;
+    margin: 5px;
+    width: 70px;
+    height: 25px;
+    cursor: pointer;
+}
+
+.search-guardian-button {
+    background: linear-gradient(to bottom, #fadb58, #f5a600);
+    border: none;
+    font-size: 13px;
+    text-align: center;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 2px 16px 2px 16px;
+    width: 120px;
+    height: 25px;
+    cursor: pointer;
+}
+
+.clear-button {
+    background: linear-gradient(to top, rgb(210, 204, 193), rgb(163, 162, 155));
+    border: none;
+    font-size: 13px;
+    text-align: center;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 2px 16px 2px 16px;
+    width: 100px;
+    height: 25px;
+    cursor: pointer;
+}
+
+/*Function button*/
+.button-container {
+    display: flex;
+    padding: 6px 8px 6px 8px;
+    gap: 8px;
+}
+
+.function-button {
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 6px 8px 6px 8px;
+    width: 128px;
+    height: 32px;
+}
+
+#btnClose {
+   background: linear-gradient(to bottom, #fadb58, #f5a600);
+   margin-right: auto;
+}
+
+#btnShowHistory, 
+#btnRegister {
+    background: linear-gradient(to bottom, #fadb58, #f5a600);
+}
+
+#btnAddHistory, 
+#btnDelete,
+#btnPublish {
+   background: rgb(220, 220, 220);
+}
+
+#btnDisplayPersonNo {
+    background: linear-gradient(to bottom, #fadb58, #f5a600);
+    border: none;
+    border-radius: 5px;
+    width: 90px;
+    height: 20px;
+    font-size: 12px;
+}
+
+
+

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'secondpage.css' %}">
+        <link rel="stylesheet" href="{% static 'combobox.css' %}">
+        <link rel="stylesheet" href="{% static 'calendar.css' %}">
+        <script src="{% static 'combobox.js' %}"></script> 
+        <script src="{% static 'calendar.js' %}"></script> 
+    </head>
+    
+    <body>
+        <div class="container">
+        {% if error %}
+            <h1>{{ error }}</h1>
+        {% endif %}
+        {% if data %}
+            {% include "components/PersonInfo.html" %}
+            {% include "components/ApplicationInfo.html" %}
+            {% include "components/Action.html" %}
+        {% endif %}
+        </div>
+    </body>
+    
+</html>
+

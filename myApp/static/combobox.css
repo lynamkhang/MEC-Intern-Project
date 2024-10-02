@@ -1,0 +1,76 @@
+.combobox-container {
+    background-color: white;
+    border: 1px solid rgb(210, 212, 212);
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    position: relative;
+    min-height: 30px;
+    cursor: pointer;
+}
+
+.combobox {
+    margin: 0 0 0 8px;
+    padding: 0 4px 0 4px;
+    width: 30px;
+    height: 20px;
+    border: 1px solid lightgray;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+}
+
+.selected-text {
+    margin-left: 30px;
+    font-size: 12px;
+    color: black;
+}
+
+/* Dropdown menu */
+.dropdown-menu {
+    display: none; 
+    flex-direction: column;
+    position: absolute; 
+    z-index: 2; /* Ensure it's on top of other elements */
+    background-color: white;
+    border: 1px solid black;
+    min-width: 184px;
+    max-width: 184px;
+}
+
+/*line between id and name*/
+.dropdown-menu::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 38px; /* Adjust space between value and text */
+    width: 1px;
+    background-color: black; 
+}
+
+.dropdown-item {
+    display: flex;
+    justify-content: flex-start;
+    padding: 1px 8px;
+    cursor: pointer;
+    font-size: 12px;
+    color: black;
+    position: relative;
+    min-height: 16px;
+}
+
+.dropdown-item span {
+    display: block;
+    flex-grow: 0; 
+    margin-right: 30px; /* Add spacing between two spans */
+}
+
+/* Selected row */
+.selected-item {
+    background-color: rgb(151, 228, 255); /* Highlight selected row */
+}
+
+.dropdown-item:hover {
+    background-color: rgb(151, 228, 255); /* Change background on hover */
+}

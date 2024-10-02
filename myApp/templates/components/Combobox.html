@@ -1,0 +1,15 @@
+<div class="combobox-container" onclick="toggleDropdown('{{ combobox_id }}')">
+    <input id="{{ combobox_id }}" value="{{ selected_value }}" readonly class="combobox">
+    <span id="selectedText_{{ combobox_id }}" class="selected-text">{{ selected_text }}</span>
+</div>
+
+<div id="dropdownMenu_{{ combobox_id }}" class="dropdown-menu">
+    {% for option in options %}
+    <div class="dropdown-item" onclick="selectOption('{{ option.id }}', '{{ option.name }}', '{{ combobox_id }}')">
+        <span>{{ option.id }}</span>
+        <span>{{ option.name }}</span>
+    </div>
+    {% endfor %}
+</div>
+
+

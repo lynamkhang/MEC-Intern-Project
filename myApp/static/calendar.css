@@ -1,0 +1,180 @@
+.calendar-container {
+    display: flex;
+    max-width: 280px;
+    min-height: 100px;
+    border: 1px solid gray;
+    border-radius: 3px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    background-color: #FFFF;
+}
+
+.calendar {
+    width: 100%;
+    margin: 5px 4px 0 4px;
+}
+
+.calendar 
+.header {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: #E9E9E9;
+    border-radius: 4px;
+    width: 100%;
+    height: 35px;
+}
+
+.calendar 
+.header 
+.year-month {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    font-weight: bold;
+    gap: 4px;
+}
+
+.calendar-body {
+    border: 2px solid lightblue;
+    width: 95%;
+    margin-bottom: 5px;
+}
+
+.weekdays {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    justify-content: space-evenly;
+  }
+
+.weekdays .day {
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.days {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1px;
+    justify-content: flex-start;
+    margin-left: 4px;
+    margin-bottom: 1px;
+}
+
+.days 
+.day {
+    width: 29px;
+    height: 25px;
+    border: 1px solid #C8C8C8;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    font-size: 16px;
+    background-color: #F6F6F6;
+    padding-right: 5px;
+    cursor: pointer;
+}
+
+.days 
+.day.empty {
+    width: 29px;
+    height: 25px;
+    gap: 0;
+    border: 1px solid #FFFF;
+    background-color: #FFFF;
+}
+
+.days
+.day.current {
+    background-color: yellow;
+}
+
+.days
+.day.selected {
+    background-color: rgb(189, 215, 238);
+}
+
+#sunday {
+    color: red;
+}
+
+#saturday {
+    color: blue;
+}
+
+/*Button*/
+#btnNext,
+#btnPrevious {
+    width: 20px; 
+    height: 20px;
+    background-color: #EDEDED;
+    border: none; 
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative; 
+}
+
+button:hover {
+    outline: 1px solid gray;
+}
+
+#btnNext {
+    margin-left: 50px;
+}
+
+#btnPrevious {
+    margin-right: 50px;
+}
+
+.circle { 
+    background-color: black;
+    border-radius: 35%;
+    width: 12px;
+    height: 12px;
+}
+
+.triangle-next {
+    border-left: 4px solid white;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+}
+
+.triangle-previous {
+    border-right: 4px solid white;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+}
+
+#btnNext .triangle-next {
+    position: absolute;
+    left: 9px; /* Adjust to position the triangle */
+}
+
+#btnNext .circle {
+    position: absolute;
+    right: 4px; /* Adjust to position the circle */
+}
+
+#btnPrevious .triangle-previous {
+    position: absolute;
+    right: 9px; /* Adjust to position the triangle */
+}
+
+#btnPrevious .circle {
+    position: absolute;
+    left: 4px; /* Adjust to position the circle */
+}
+
+#txtDateDisplay {
+    width: 95%;
+    height: 85%;
+    border: 1px solid lightblue;
+    border-radius: 0;
+}

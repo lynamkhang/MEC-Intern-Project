@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'firstpage.css' %}">
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="header-container">
+                <div class="dot-container">
+                    <div class="column">
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                    </div>
+                    <div class="column">
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                    </div>
+                </div>
+                <p>障害者福祉システム</p>
+            </div>
+        </div>
+
+        <section>
+            <div id=''>
+                <p>個人情報</p>
+                <a href="{% url 'secondpage' %}?personId=P00001" title="http://127.0.0.1:8000/secondpage/?personId=P00001">
+                    自立支援【補装具情報】：台帳(新規)
+                </a>
+            </div>
+        </section>
+    </body>
+</html>
+
+
+
