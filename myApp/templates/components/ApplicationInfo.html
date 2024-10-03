@@ -22,8 +22,8 @@
     </div>
 
     <div class="item" id="acceptanceDate">受理日</div>
-    <div class="data-display" id="acceptanceDateData">
-        <input type="date" value="{{data.acceptDate}}">
+    <div id="acceptanceDateData">
+        {% include "components/Calendar.html" %}
     </div>
 
     <div class="item" id="paymentMethod">支払方式</div>

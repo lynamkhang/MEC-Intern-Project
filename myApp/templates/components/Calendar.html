@@ -1,6 +1,8 @@
 <div class="date-input">
-    <input id="txtDateDisplay">
+    <input id="txtDateDisplay" readonly>
+    <div class="image-container" id="imgCalendar"></div>
 </div>
+
 <div class="calendar-container">
     <div class="calendar">
         <div class="header">
@@ -10,10 +12,10 @@
             </button>
 
             <div class="year-month">
-                <div class="year"></div>
+                <select id="yearSelector"></select>
                 <div class="month"></div>
             </div>
-                
+            
             <button id="btnNext">
                 <div class="circle"></div>
                 <div class="triangle-next"></div>

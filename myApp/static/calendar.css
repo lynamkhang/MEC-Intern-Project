@@ -1,5 +1,17 @@
-.calendar-container {
+.date-input {
     display: flex;
+    background-color: white;
+    border: 1px solid rgb(210, 212, 212);
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    position: relative;
+    cursor: pointer;
+}
+
+.calendar-container {
+    display: none;
+    position: absolute;
     max-width: 280px;
     min-height: 100px;
     border: 1px solid gray;
@@ -8,6 +20,7 @@
     align-items: center;
     flex-wrap: wrap;
     background-color: #FFFF;
+    z-index: 100;
 }
 
 .calendar {
@@ -33,7 +46,28 @@
     align-items: center;
     font-size: 14px;
     font-weight: bold;
-    gap: 4px;
+    gap: 3px;
+}
+
+.month {
+    margin-top: 3px;
+}
+
+#yearSelector {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none; 
+    background-color: #E9E9E9;
+    border: none;
+    font-weight: bold;
+    font-size: 14px;
+    width: 45px;
+    height: 25px;
+    cursor: pointer;
+}
+
+#yearSelector:focus {
+    outline: none;
 }
 
 .calendar-body {
@@ -86,6 +120,7 @@
     gap: 0;
     border: 1px solid #FFFF;
     background-color: #FFFF;
+    cursor: default;
 }
 
 .days
@@ -173,8 +208,9 @@ button:hover {
 }
 
 #txtDateDisplay {
-    width: 95%;
-    height: 85%;
+    width: 85%;
+    height: 25px;
     border: 1px solid lightblue;
-    border-radius: 0;
+    border-radius: 0; 
+    margin-bottom: 2px;
 }

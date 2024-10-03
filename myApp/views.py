@@ -50,13 +50,14 @@ def fetch_data(person_id):
         return data
     
 def format_data(rows, columns):
-    result = []
-    for row in rows:
-        row_data = {}
-        for col, val in zip(columns, row):
-            row_data[col] = val if val is not None else ''  # Replace None with ''
-        result.append(row_data)
-    return result
+    if not rows:  # If there are no rows, return None
+        return None
+
+    row_data = {}
+    for col, val in zip(columns, rows[0]): 
+        row_data[col] = val if val is not None else ''  # Replace None with ''
+
+    return row_data  
     
 def secondpage(request):
     person_id = request.GET.get('personId')
@@ -69,21 +70,20 @@ def secondpage(request):
     if data:
         # Fetch data for each combobox dynamically
         comboboxes = {
-            'jobcategory': fetch_dropdown_data('jobcategory'),
-            'relationship': fetch_dropdown_data('relationship'),
-            'targetcategory': fetch_dropdown_data('targetcategory'),
+            'jobcategory': fetch_dropdown_data('jobcategoryinfo'),
+            'relationship': fetch_dropdown_data('relationshipinfo'),
+            'targetcategory': fetch_dropdown_data('targetcatgoryinfo'),
             'paymentinfo': fetch_dropdown_data('paymentinfo'),
-            'registerreason': fetch_dropdown_data('registerreason'),
+            'registerreason': fetch_dropdown_data('registerreasoninfo'),
             'decisioninfo': fetch_dropdown_data('decisioninfo'),
             'draftpersoninfo': fetch_dropdown_data('draftpersoninfo'),
             'registerpersoninfo': fetch_dropdown_data('registerpersoninfo'),
             'kannaiinfo': fetch_dropdown_data('kannaiinfo'),
             'rejectinfo': fetch_dropdown_data('rejectinfo'),
-            # Add more comboboxes if needed
         }
 
         context = {
-            'data': data[0],
+            'data': data,
             'combobox_data': comboboxes,
         }
         return render(request, 'SecondPage.html', context)
@@ -92,34 +92,37 @@ def secondpage(request):
 
 
 # Define a dictionary to map table names to their corresponding SQL queries
-table_queries = {
-    'jobcategory': 'SELECT "jobID", "jobType" FROM public.app_jobcategoryinfo ORDER BY id ASC',
-    'relationship': 'SELECT "relationshipID", "relationshipType" FROM public.app_relationshipinfo ORDER BY id ASC',
-    'targetcategory': 'SELECT "targetID", "targetName" FROM public.app_targetcatgoryinfo ORDER BY id ASC',
-    'paymentinfo': 'SELECT "paymentID", "paymentType" FROM public.app_paymentinfo ORDER BY id ASC',
-    'registerreason': 'SELECT "reReasonID", "reReasonName" FROM public.app_registerreasoninfo ORDER BY id ASC',
-    'decisioninfo': 'SELECT "decisionID", "decisionType" FROM public.app_decisioninfo ORDER BY id ASC',
-    'draftpersoninfo': 'SELECT "draftPersonID", "draftPersonName" FROM public.app_draftpersoninfo ORDER BY id ASC',
-    'registerpersoninfo': 'SELECT "registerPersonID", "registerPersonName" FROM public.app_registerpersoninfo ORDER BY id ASC',
-    'kannaiinfo': 'SELECT "kannaiID", "kannaiType" FROM public.app_kannaiinfo ORDER BY id ASC',
-    'rejectinfo': 'SELECT "rejectID", "rejectType" FROM public.app_rejectinfo ORDER BY id ASC',
+table_columns = {
+    'jobcategoryinfo': ('jobID', 'jobType'),
+    'relationshipinfo': ('relationshipID', 'relationshipType'),
+    'targetcatgoryinfo': ('targetID', 'targetName'),
+    'paymentinfo': ('paymentID', 'paymentType'),
+    'registerreasoninfo': ('reReasonID', 'reReasonName'),
+    'decisioninfo': ('decisionID', 'decisionType'),
+    'draftpersoninfo': ('draftPersonID', 'draftPersonName'),
+    'registerpersoninfo': ('registerPersonID', 'registerPersonName'),
+    'kannaiinfo': ('kannaiID', 'kannaiType'),
+    'rejectinfo': ('rejectID', 'rejectType'),
 }
+
+def generate_query(table_name):
+    # Check if the table name exists in the mapping
+    if table_name in table_columns:
+        item_id, item_type = table_columns[table_name]
+        return f'SELECT "{item_id}", "{item_type}" FROM public.app_{table_name} ORDER BY "{item_id}" ASC'
+    else:
+        raise ValueError(f"Table {table_name} is not defined.")
 
 def fetch_dropdown_data(table_name):
     try:
         with connection.cursor() as cursor:
 
-            # Check if the table_name is valid
-            if table_name not in table_queries:
-                return HttpResponse(f"Invalid table name: {table_name}")
-                        
-            sql = table_queries[table_name]
+            sql = generate_query(table_name)
             cursor.execute(sql)
             rows = cursor.fetchall()
             rows = format_dropdown_data(rows)
             cursor.close()
             
-            # Structure the data for use in the template
             data = [{'id': row[0], 'name': row[1]} for row in rows]
             return data
 
