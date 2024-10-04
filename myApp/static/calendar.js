@@ -1,23 +1,24 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const calendar = document.querySelector('.days');
-    const currentDate = new Date(); 
-    let currentMonth = currentDate.getMonth(); 
-    let currentYear = currentDate.getFullYear(); 
-    let currentDay = currentDate.getDate(); 
-    let selectedDay = null; // Track the selected day
+document.addEventListener("DOMContentLoaded", function () {
+    const currentDate = new Date();
+    let currentMonth = currentDate.getMonth();
+    let currentYear = currentDate.getFullYear();
+    let currentDay = currentDate.getDate();
 
-    const monthElement = document.querySelector('.month');
-    const dateInput = document.querySelector('#txtDateDisplay'); 
-    
     const months = ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"];
-    
-    const calendarContainer = document.querySelector('.calendar-container');
-    const calendarInput = document.querySelector('.date-input');
 
-    const yearSelector = document.getElementById('yearSelector');
+    function formatDataDate(calendarId) {
+        const dataDate = document.getElementById(`txtDateDisplay${calendarId}`).value;
+        if (dataDate) {
+            let date = dataDate.split("-");
+            let formattedDate = formatDate(date[0], parseInt(date[1], 10) - 1, date[2]);
 
-    // Populate year selector with a range of years 
-    function populateYearSelector(startYear, endYear) {
+            return formattedDate;
+        }
+        return ""; 
+    }
+
+    function populateYearSelector(calendarId, startYear, endYear) {
+        const yearSelector = document.getElementById(`yearSelector${calendarId}`);
         for (let year = startYear; year <= endYear; year++) {
             const option = document.createElement('option');
             option.value = year;
@@ -26,31 +27,10 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    // Initialize the year selector
-    populateYearSelector(1868, 2100);
-
-    // Set the year selector to the current year by default
-    yearSelector.value = currentYear;
-    
-    // Handle year change event
-    yearSelector.addEventListener('change', function() {
-        currentYear = parseInt(this.value); // Get the selected year
-        renderCalendar(currentMonth, currentYear); 
-    });
-
-    // Toggle the visibility of the calendar
-    calendarInput.addEventListener('click', function() {
-        if (calendarContainer.style.display === 'none') {
-            calendarContainer.style.display = 'flex';
-        } else {
-            calendarContainer.style.display = 'none';
-        }
-    });
-
-    // Function to convert to Japanese era
+    // Convert to Japanese era
     function convertToJapaneseEra(year, month, day) {
-        // Reiwa era (starts on May 1, 2019) Test OK
-        if (year === 2019 && (month === 5 && day >= 1)) {
+         // Reiwa era (starts on May 1, 2019) Test OK
+         if (year === 2019 && (month === 5 && day >= 1)) {
             return `R01`; 
         } else if (year > 2019) {
             return `R${(year - 2019 + 1).toString().padStart(2, '0')}`; 
@@ -90,73 +70,144 @@ document.addEventListener("DOMContentLoaded", function() {
         const formattedYear = convertToJapaneseEra(year, month + 1, day);
         const formattedMonth = (month + 1).toString().padStart(2, '0');
         const formattedDay = day.toString().padStart(2, '0');
-
+        
         return `${formattedYear}.${formattedMonth}.${formattedDay}`;
     }
 
-    function renderCalendar(month, year) {
-        calendar.innerHTML = ''; // Clear previous days
-        
-        // Ensure correct month and year are displayed
-        monthElement.innerText = months[month];
-        yearSelector.value = year; // Use the yearSelector dropdown to show the year
-    
-        const firstDayOfMonth = new Date(year, month, 1).getDay();
-        const daysInMonth = new Date(year, month + 1, 0).getDate();
-    
-        // Fill in the blank days for the first week
+    function fillBlankDays(calendar, firstDayOfMonth) {
         for (let i = 0; i < firstDayOfMonth; i++) {
             const blankDay = document.createElement('div');
             blankDay.classList.add('day', 'empty');
-            calendar.appendChild(blankDay); 
+            calendar.appendChild(blankDay);
         }
-    
-        // Fill the calendar with actual days
-        for (let day = 1; day <= daysInMonth; day++) {
-            const dayElement = document.createElement('div');
-            dayElement.classList.add('day');
-            dayElement.innerText = day;
-    
-            // Highlight the current day
-            if (day === currentDay && month === currentDate.getMonth() && year === currentDate.getFullYear()) {
-                dayElement.classList.add('current');
+    }
+
+    function createDayElement(calendarId, day, month, year) {
+        const dayElement = document.createElement('div');
+        dayElement.classList.add('day');
+        dayElement.innerText = day;
+
+        const dayOfWeek = new Date(year, month, day).getDay();
+
+        if (dayOfWeek === 0) {
+            dayElement.classList.add('sunday');
+        } else if (dayOfWeek === 6) {
+            dayElement.classList.add('saturday');
+        }
+
+        if (day === currentDay && month === currentDate.getMonth() && year === currentDate.getFullYear()) {
+            dayElement.classList.add('current');
+        }
+
+        // Add click event listener to the day element
+        dayElement.addEventListener('click', function () {
+            const calendarContainer = document.getElementById(`calendar${calendarId}`);
+            let selectedDay = calendarContainer.querySelector('.selected');
+
+            // Highlight the selected day
+            if (selectedDay) {
+                selectedDay.classList.remove('selected');
             }
-    
-            // Handle day selection and update input
-            dayElement.addEventListener('click', function() {
-                if (selectedDay) {
-                    selectedDay.classList.remove('selected');
-                }
-                dayElement.classList.add('selected');
-                selectedDay = dayElement;
-                
-                const selectedDate = formatDate(year, month, day)
-                dateInput.value = selectedDate;
-            });
-    
+            dayElement.classList.add('selected');
+            selectedDay = dayElement;
+
+            // Display the selected date in the date-display input
+            const formattedDate = formatDate(year, month, day);
+            const dateDisplay = document.getElementById(`txtDateDisplay${calendarId}`);
+            dateDisplay.value = formattedDate;
+
+            // Hide the calendar after selecting a day
+            calendarContainer.style.display = 'none';
+        });
+
+        return dayElement;
+    }
+
+    function renderDaysInMonth(calendar, month, year, daysInMonth, calendarId) {
+        for (let day = 1; day <= daysInMonth; day++) {
+            const dayElement = createDayElement(calendarId, day, month, year);
             calendar.appendChild(dayElement);
         }
     }
 
-    // Initial rendering of the calendar
-    renderCalendar(currentMonth, currentYear);
+    function renderCalendar(calendarId, month, year) {
+        const calendar = document.querySelector(`#days${calendarId}`);
+        const monthElement = document.querySelector(`#month${calendarId}`);
+        const yearSelector = document.getElementById(`yearSelector${calendarId}`);
 
-    // Next and Previous button functionality
-    document.getElementById("btnNext").addEventListener("click", function() {
-        currentMonth++;
-        if (currentMonth > 11) {
-            currentMonth = 0; // Reset to January
-            currentYear++; 
-        }
-        renderCalendar(currentMonth, currentYear); // Render the updated calendar
-    });
+        calendar.innerHTML = '';
 
-    document.getElementById("btnPrevious").addEventListener("click", function() {
-        currentMonth--;
-        if (currentMonth < 0) {
-            currentMonth = 11; // Reset to December
-            currentYear--; 
-        }
-        renderCalendar(currentMonth, currentYear); // Render the updated calendar
-    });
+        monthElement.innerText = months[month];
+        yearSelector.value = year;
+
+        const firstDayOfMonth = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+        fillBlankDays(calendar, firstDayOfMonth);
+        renderDaysInMonth(calendar, month, year, daysInMonth, calendarId);
+    }
+
+    function initializeCalendar(calendarId) {
+
+        populateYearSelector(calendarId, 1868, 2100);
+
+        renderCalendar(calendarId, currentYear, currentMonth);
+
+        // Set default value for the calendar
+        const dateDisplay = document.getElementById(`txtDateDisplay${calendarId}`);
+        dateDisplay.value = formatDataDate(calendarId);
+
+        document.getElementById(`btnNext${calendarId}`).addEventListener("click", function () {
+            currentMonth++;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            renderCalendar(calendarId, currentMonth, currentYear);
+        });
+
+        document.getElementById(`btnPrevious${calendarId}`).addEventListener("click", function () {
+            currentMonth--;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            renderCalendar(calendarId, currentMonth, currentYear);
+        });
+
+        // Handle year change in selector
+        document.getElementById(`yearSelector${calendarId}`).addEventListener("change", function (e) {
+            currentYear = parseInt(e.target.value);
+            renderCalendar(calendarId, currentMonth, currentYear);
+        });
+
+        renderCalendar(calendarId, currentMonth, currentYear);
+    }
+
+    // Initialize the calendar
+    initializeCalendar('AcceptDate');
+    initializeCalendar('DraftDate');
+    initializeCalendar('RegisterDate');
+    initializeCalendar('ClosingDate');
+    initializeCalendar('PaymentDate');
 });
+
+function toggleCalendar(calendarId) {
+    const calendarContainer = document.getElementById(`calendar${calendarId}`);
+    const calendarInput = document.getElementById(`dateInput${calendarId}`);
+    const isVisible = calendarContainer.style.display === 'flex';
+
+    const allDropdowns = document.querySelectorAll('.calendar-container');
+    allDropdowns.forEach(function (dropdown) {
+        dropdown.style.display = 'none';
+    });
+
+    document.addEventListener('click', function(event) {
+        if (!calendarContainer.contains(event.target) && !calendarInput.contains(event.target)) {
+            calendarContainer.style.display = 'none';
+        }
+    });
+    
+    calendarContainer.style.display = isVisible ? 'none' : 'flex';
+}
+

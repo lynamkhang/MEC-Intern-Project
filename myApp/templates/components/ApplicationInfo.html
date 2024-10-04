@@ -23,7 +23,7 @@
 
     <div class="item" id="acceptanceDate">受理日</div>
     <div id="acceptanceDateData">
-        {% include "components/Calendar.html" %}
+        {% include "components/Calendar.html" with calendar_id="AcceptDate" calendar_value=data.acceptDate %}
     </div>
 
     <div class="item" id="paymentMethod">支払方式</div>
@@ -46,13 +46,14 @@
     
 
     <div class="item" id="draftDate">起案日</div>
-    <div class="data-display" id="draftDateData">
-        <input type="date" value="{{data.draftDate}}">
+    <div id="draftDateData">
+        {% include "components/Calendar.html" with calendar_id="DraftDate" calendar_value=data.draftDate %}
     </div>
 
     <div class="item" id="applicationDate">申請年月日</div>
-    <div class="data-display" id="applicationDateData">
-        <input type="date" value="{{data.registerDate}}">
+    <div id="applicationDateData">
+        {% include "components/Calendar.html" with calendar_id="RegisterDate" calendar_value=data.registerDate %}
+
     </div>
 
     <div class="item" id="acceptNumber">受理番号</div>
@@ -81,13 +82,13 @@
     </div>
 
     <div class="item" id="closingDate">決蔽日</div>
-    <div class="data-display" id="closingDateData">
-        <input type="date" value="{{data.closingDate}}">
+    <div id="closingDateData">
+        {% include "components/Calendar.html" with calendar_id="ClosingDate" calendar_value=data.closingDate %}        
     </div>
 
     <div class="item" id="paymentDate">支給決定日</div>
-    <div class="data-display" id="paymentDateData">
-        <input type="date" value="{{data.paymentDate}}">
+    <div id="paymentDateData">
+        {% include "components/Calendar.html" with calendar_id="PaymentDate" calendar_value=data.paymentDate %}
     </div>
 
     <div class="item" id="kannai">管内別</div>

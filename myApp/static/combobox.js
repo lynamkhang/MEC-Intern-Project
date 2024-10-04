@@ -1,6 +1,6 @@
 // Function to toggle dropdown visibility
 function toggleDropdown(comboboxId) {
-    var dropdownMenu = document.getElementById('dropdownMenu_' + comboboxId);
+    var dropdownMenu = document.getElementById('dropdownMenu' + comboboxId);
     var isVisible = dropdownMenu.style.display === 'block';
 
     // Hide all other dropdowns before showing the current one
@@ -19,11 +19,11 @@ function selectOption(optionId, optionName, comboboxId) {
     var comboboxInput = document.getElementById(comboboxId);
     comboboxInput.value = optionId;
 
-    var selectedTextSpan = document.getElementById('selectedText_' + comboboxId);
+    var selectedTextSpan = document.getElementById('selectedText' + comboboxId);
     selectedTextSpan.textContent = optionName;
 
     // Hide the dropdown after selection
-    var dropdownMenu = document.getElementById('dropdownMenu_' + comboboxId);
+    var dropdownMenu = document.getElementById('dropdownMenu' + comboboxId);
     dropdownMenu.style.display = 'none';
 }
 

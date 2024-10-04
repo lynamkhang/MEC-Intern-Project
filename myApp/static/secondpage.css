@@ -68,8 +68,9 @@ b {
 
 .image-container {
     width: 25px;
-    height: 30px;
+    height: 29px;
     border-left: 2px solid rgb(210, 212, 212);
+    border-top: 2px solid rgb(210, 212, 212);
     background-size: contain;
     margin-left: auto;
     cursor: pointer;

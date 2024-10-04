@@ -1,22 +1,22 @@
-<div class="date-input">
-    <input id="txtDateDisplay" readonly>
+<div class="date-input" id="dateInput{{calendar_id}}" onclick="toggleCalendar('{{calendar_id}}')">
+    <input class="date-display" id="txtDateDisplay{{calendar_id}}" value="{{calendar_value}}" readonly>
     <div class="image-container" id="imgCalendar"></div>
 </div>
 
-<div class="calendar-container">
+<div class="calendar-container" id="calendar{{calendar_id}}">
     <div class="calendar">
         <div class="header">
-            <button id="btnPrevious">
+            <button class="previous-button" id="btnPrevious{{calendar_id}}">
                 <div class="circle"></div>
                 <div class="triangle-previous"></div>
             </button>
 
             <div class="year-month">
-                <select id="yearSelector"></select>
-                <div class="month"></div>
+                <select class="year-selector" id="yearSelector{{calendar_id}}"></select>
+                <div class="month" id="month{{calendar_id}}"></div>
             </div>
             
-            <button id="btnNext">
+            <button class="next-button" id="btnNext{{calendar_id}}">
                 <div class="circle"></div>
                 <div class="triangle-next"></div>
             </button>
@@ -34,6 +34,6 @@
             <div class="day" id="saturday">土</div>
         </div>
 
-        <div class="days"></div>
+        <div class="days" id="days{{calendar_id}}"></div>
     </div>
-</div>    
+</div>
