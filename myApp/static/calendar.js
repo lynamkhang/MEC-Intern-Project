@@ -1,10 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     const currentDate = new Date();
-    let currentMonth = currentDate.getMonth();
-    let currentYear = currentDate.getFullYear();
-    let currentDay = currentDate.getDate();
-
     const months = ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"];
+    const calendarState = {};
 
     function formatDataDate(calendarId) {
         const dataDate = document.getElementById(`txtDateDisplay${calendarId}`).value;
@@ -20,11 +17,15 @@ document.addEventListener("DOMContentLoaded", function () {
     function populateYearSelector(calendarId, startYear, endYear) {
         const yearSelector = document.getElementById(`yearSelector${calendarId}`);
         for (let year = startYear; year <= endYear; year++) {
-            const option = document.createElement('option');
-            option.value = year;
-            option.text = `${year}年`;
-            yearSelector.appendChild(option);
+            yearSelector.appendChild(new Option(`${year}年`, year));
         }
+
+        yearSelector.addEventListener('focus', function () { this.size = 10; });
+        yearSelector.addEventListener('blur', function () { this.size = 1; });
+        yearSelector.addEventListener('change', function () {
+            this.size = 1;
+            this.blur();
+        });
     }
 
     // Convert to Japanese era
@@ -70,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const formattedYear = convertToJapaneseEra(year, month + 1, day);
         const formattedMonth = (month + 1).toString().padStart(2, '0');
         const formattedDay = day.toString().padStart(2, '0');
-        
+
         return `${formattedYear}.${formattedMonth}.${formattedDay}`;
     }
 
@@ -86,102 +87,119 @@ document.addEventListener("DOMContentLoaded", function () {
         const dayElement = document.createElement('div');
         dayElement.classList.add('day');
         dayElement.innerText = day;
-
+    
         const dayOfWeek = new Date(year, month, day).getDay();
-
         if (dayOfWeek === 0) {
             dayElement.classList.add('sunday');
         } else if (dayOfWeek === 6) {
             dayElement.classList.add('saturday');
         }
-
-        if (day === currentDay && month === currentDate.getMonth() && year === currentDate.getFullYear()) {
+    
+        if (day === currentDate.getDate() && month === currentDate.getMonth() && year === currentDate.getFullYear()) {
             dayElement.classList.add('current');
         }
-
-        // Add click event listener to the day element
+    
+        // Restore selected 
+        if (calendarState[calendarId].selectedDay === day &&
+            calendarState[calendarId].selectedMonth === month &&
+            calendarState[calendarId].selectedYear === year) {
+            dayElement.classList.add('selected');
+        }
+    
         dayElement.addEventListener('click', function () {
             const calendarContainer = document.getElementById(`calendar${calendarId}`);
             let selectedDay = calendarContainer.querySelector('.selected');
-
-            // Highlight the selected day
+    
             if (selectedDay) {
                 selectedDay.classList.remove('selected');
             }
             dayElement.classList.add('selected');
-            selectedDay = dayElement;
-
-            // Display the selected date in the date-display input
+    
+            // Update the state with the selected day
+            calendarState[calendarId].selectedDay = day;
+            calendarState[calendarId].selectedMonth = month;
+            calendarState[calendarId].selectedYear = year;
+    
             const formattedDate = formatDate(year, month, day);
             const dateDisplay = document.getElementById(`txtDateDisplay${calendarId}`);
             dateDisplay.value = formattedDate;
-
-            // Hide the calendar after selecting a day
+    
             calendarContainer.style.display = 'none';
         });
-
+    
         return dayElement;
     }
-
-    function renderDaysInMonth(calendar, month, year, daysInMonth, calendarId) {
-        for (let day = 1; day <= daysInMonth; day++) {
-            const dayElement = createDayElement(calendarId, day, month, year);
-            calendar.appendChild(dayElement);
-        }
-    }
-
-    function renderCalendar(calendarId, month, year) {
+    
+    function renderCalendar(calendarId, month, year, selectedDay = null) {
         const calendar = document.querySelector(`#days${calendarId}`);
         const monthElement = document.querySelector(`#month${calendarId}`);
         const yearSelector = document.getElementById(`yearSelector${calendarId}`);
-
+    
         calendar.innerHTML = '';
-
+    
         monthElement.innerText = months[month];
         yearSelector.value = year;
-
+    
         const firstDayOfMonth = new Date(year, month, 1).getDay();
         const daysInMonth = new Date(year, month + 1, 0).getDate();
-
+    
         fillBlankDays(calendar, firstDayOfMonth);
-        renderDaysInMonth(calendar, month, year, daysInMonth, calendarId);
+        
+        // Render days and check if they should be selected
+        for (let day = 1; day <= daysInMonth; day++) {
+            const dayElement = createDayElement(calendarId, day, month, year);
+    
+            // Highlight the default selected day
+            if (selectedDay && day === selectedDay) {
+                dayElement.classList.add('selected');
+            }
+    
+            calendar.appendChild(dayElement);
+        }
     }
-
+    
     function initializeCalendar(calendarId) {
+        const selectedDate = document.getElementById(`txtDateDisplay${calendarId}`).value.split('-');
+        let selectedYear = parseInt(selectedDate[0]) || currentDate.getFullYear();
+        let selectedMonth = (parseInt(selectedDate[1]) - 1) || currentDate.getMonth();
+        let selectedDay = parseInt(selectedDate[2]) || currentDate.getDate();
+
+        calendarState[calendarId] = {
+            currentMonth: selectedMonth,
+            currentYear: selectedYear,
+            selectedDay,
+            selectedMonth,
+            selectedYear
+        };
 
         populateYearSelector(calendarId, 1868, 2100);
+        document.getElementById(`txtDateDisplay${calendarId}`).value = formatDataDate(calendarId);
 
-        renderCalendar(calendarId, currentYear, currentMonth);
+        const nextBtn = document.getElementById(`btnNext${calendarId}`);
+        const prevBtn = document.getElementById(`btnPrevious${calendarId}`);
+        const yearSelector = document.getElementById(`yearSelector${calendarId}`);
 
-        // Set default value for the calendar
-        const dateDisplay = document.getElementById(`txtDateDisplay${calendarId}`);
-        dateDisplay.value = formatDataDate(calendarId);
-
-        document.getElementById(`btnNext${calendarId}`).addEventListener("click", function () {
-            currentMonth++;
-            if (currentMonth > 11) {
-                currentMonth = 0;
-                currentYear++;
-            }
-            renderCalendar(calendarId, currentMonth, currentYear);
+        [nextBtn, prevBtn].forEach((btn, index) => {
+            btn.addEventListener("click", function () {
+                const direction = index === 0 ? 1 : -1;
+                calendarState[calendarId].currentMonth += direction;
+                if (calendarState[calendarId].currentMonth > 11) {
+                    calendarState[calendarId].currentMonth = 0;
+                    calendarState[calendarId].currentYear++;
+                } else if (calendarState[calendarId].currentMonth < 0) {
+                    calendarState[calendarId].currentMonth = 11;
+                    calendarState[calendarId].currentYear--;
+                }
+                renderCalendar(calendarId, calendarState[calendarId].currentMonth, calendarState[calendarId].currentYear);
+            });
         });
 
-        document.getElementById(`btnPrevious${calendarId}`).addEventListener("click", function () {
-            currentMonth--;
-            if (currentMonth < 0) {
-                currentMonth = 11;
-                currentYear--;
-            }
-            renderCalendar(calendarId, currentMonth, currentYear);
+        yearSelector.addEventListener("change", function (e) {
+            calendarState[calendarId].currentYear = parseInt(e.target.value);
+            renderCalendar(calendarId, calendarState[calendarId].currentMonth, calendarState[calendarId].currentYear);
         });
 
-        // Handle year change in selector
-        document.getElementById(`yearSelector${calendarId}`).addEventListener("change", function (e) {
-            currentYear = parseInt(e.target.value);
-            renderCalendar(calendarId, currentMonth, currentYear);
-        });
-
-        renderCalendar(calendarId, currentMonth, currentYear);
+        renderCalendar(calendarId, calendarState[calendarId].currentMonth, calendarState[calendarId].currentYear);
     }
 
     // Initialize the calendar
@@ -210,4 +228,3 @@ function toggleCalendar(calendarId) {
     
     calendarContainer.style.display = isVisible ? 'none' : 'flex';
 }
-

@@ -61,13 +61,9 @@
     border: none;
     font-weight: bold;
     font-size: 14px;
-    width: 45px;
-    height: 25px;
+    min-width: 45px;
+    z-index: 101;
     cursor: pointer;
-}
-
-#yearSelector:focus {
-    outline: none;
 }
 
 .calendar-body {
