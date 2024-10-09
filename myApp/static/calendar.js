@@ -135,7 +135,9 @@ document.addEventListener("DOMContentLoaded", function () {
         calendarState[calendarId] = { 
             selectedDay: day, 
             selectedMonth: month, 
-            selectedYear: year 
+            selectedYear: year,
+            currentMonth: month, // Ensure current month reflects the selected month
+            currentYear: year // Ensure current year reflects the selected year
         };
     
         // Update the date display input with the formatted date
@@ -144,8 +146,8 @@ document.addEventListener("DOMContentLoaded", function () {
     
         // Hide the calendar after selection
         calendarContainer.style.display = 'none';
-    }    
-    
+    }
+        
     function renderCalendar(calendarId, month, year, selectedDay = null) {
         const calendar = document.querySelector(`#days${calendarId}`);
         const monthElement = document.querySelector(`#month${calendarId}`);
@@ -214,8 +216,8 @@ document.addEventListener("DOMContentLoaded", function () {
             selectedDay,
             selectedMonth,
             selectedYear,
-            currentMonth: selectedMonth,
-            currentYear: selectedYear
+            currentMonth: selectedMonth, // Make sure this is set correctly
+            currentYear: selectedYear // Make sure this is set correctly
         };
     
         // Populate the year selector and update the input field with the formatted date
@@ -225,7 +227,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Render the calendar with the current state
         renderCalendar(calendarId, selectedMonth, selectedYear, selectedDay);
     }
-    
+        
     // Function to extract the initial date values from input or use the current date
     function getInitialDateValues(selectedDate) {
         const currentDate = new Date();
@@ -239,7 +241,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (selectedDate) {
             const [year, month, day] = selectedDate.split("-").map(Number);
             selectedDay = day;
-            selectedMonth = month - 1;  // Convert to 0-based index for JavaScript Date
+            selectedMonth = month - 1;  // Convert to 0-based index
             selectedYear = year;
         }
         
