@@ -30,31 +30,31 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Convert to Japanese era
     function convertToJapaneseEra(year, month, day) {
-         // Reiwa era (starts on May 1, 2019) Test OK
-         if (year === 2019 && (month === 5 && day >= 1)) {
+        // Reiwa era (starts on May 1, 2019)
+        if (year === 2019 && (month === 5 && day >= 1)) {
             return `R01`; 
         } else if (year > 2019) {
             return `R${(year - 2019 + 1).toString().padStart(2, '0')}`; 
-        // Heisei era (January 8, 1989 - April 30, 2019) Test OK
+        // Heisei era (January 8, 1989 - April 30, 2019)
         } else if (year === 2019 && month < 5) {
             return `H31`;
         } else if (year === 1989 && (month === 1 && day >= 8)) {
             return `H01`;
         } else if (year > 1989) {
             return `H${(year - 1989 + 1).toString().padStart(2, '0')}`; 
-        // Showa era (December 25, 1926 - January 7, 1989) Test OK
+        // Showa era (December 25, 1926 - January 7, 1989)
         } else if (year === 1926 && (month > 11 && day >= 25)) {
             return `S01`; 
         } else if (year > 1926) {
             return `S${(year - 1926 + 1).toString().padStart(2, '0')}`; 
         } else if (year === 1989 && month === 0 && day < 8) {
             return `S64`; 
-        // Taisho era (July 30, 1912 - December 24, 1926) Test OK
-        } else if (year > 1912 || (year === 1912 && month > 6) ) {
+        // Taisho era (July 30, 1912 - December 24, 1926)
+        } else if (year > 1912 || (year === 1912 && month > 6)) {
             return `T${(year - 1912 + 1).toString().padStart(2, '0')}`; 
         } else if (year === 1926 && month === 11 && day < 25) {
             return `T15`; 
-        // Meiji era (January 25, 1868 - July 29, 1912) Test OK
+        // Meiji era (January 25, 1868 - July 29, 1912)
         } else if (year === 1868 && (month === 1 && day >= 25)) {
             return `M01`; 
         } else if (year >= 1868 && month > 1) {
@@ -148,59 +148,92 @@ document.addEventListener("DOMContentLoaded", function () {
         // Render days and check if they should be selected
         for (let day = 1; day <= daysInMonth; day++) {
             const dayElement = createDayElement(calendarId, day, month, year);
-    
-            // Highlight the default selected day
-            if (selectedDay && day === selectedDay) {
-                dayElement.classList.add('selected');
-            }
-    
             calendar.appendChild(dayElement);
         }
+
+        const nextBtn = document.getElementById(`btnNext${calendarId}`);
+        const prevBtn = document.getElementById(`btnPrevious${calendarId}`);
+
+        prevBtn.onclick = function () {
+            // Reset to the selected date when going to previous month
+            const selectedDate = new Date(calendarState[calendarId].selectedYear, calendarState[calendarId].selectedMonth, calendarState[calendarId].selectedDay);
+            selectedDate.setMonth(selectedDate.getMonth() - 1);
+            calendarState[calendarId].currentMonth = selectedDate.getMonth();
+            calendarState[calendarId].currentYear = selectedDate.getFullYear();
+            renderCalendar(calendarId, calendarState[calendarId].currentMonth, calendarState[calendarId].currentYear, calendarState[calendarId].selectedDay);
+        };
+
+        nextBtn.onclick = function () {
+            // Reset to the selected date when going to next month
+            const selectedDate = new Date(calendarState[calendarId].selectedYear, calendarState[calendarId].selectedMonth, calendarState[calendarId].selectedDay);
+            selectedDate.setMonth(selectedDate.getMonth() + 1);
+            calendarState[calendarId].currentMonth = selectedDate.getMonth();
+            calendarState[calendarId].currentYear = selectedDate.getFullYear();
+            renderCalendar(calendarId, calendarState[calendarId].currentMonth, calendarState[calendarId].currentYear, calendarState[calendarId].selectedDay);
+        };
     }
     
     function initializeCalendar(calendarId) {
-        const selectedDate = document.getElementById(`txtDateDisplay${calendarId}`).value.split('-');
-        let selectedYear = parseInt(selectedDate[0]) || currentDate.getFullYear();
-        let selectedMonth = (parseInt(selectedDate[1]) - 1) || currentDate.getMonth();
-        let selectedDay = parseInt(selectedDate[2]) || currentDate.getDate();
+        const selectedDate = document.getElementById(`txtDateDisplay${calendarId}`).value;
+        let selectedDay = currentDate.getDate();
+        let selectedMonth = currentDate.getMonth();
+        let selectedYear = currentDate.getFullYear();
+
+        if (selectedDate) {
+            const dateParts = selectedDate.split("-");
+            selectedDay = parseInt(dateParts[2]);
+            selectedMonth = parseInt(dateParts[1]) - 1; // Adjust for zero-based index
+            selectedYear = parseInt(dateParts[0]);
+        }
 
         calendarState[calendarId] = {
-            currentMonth: selectedMonth,
-            currentYear: selectedYear,
             selectedDay,
             selectedMonth,
-            selectedYear
+            selectedYear,
+            currentMonth: selectedMonth,
+            currentYear: selectedYear
         };
 
         populateYearSelector(calendarId, 1868, 2100);
         document.getElementById(`txtDateDisplay${calendarId}`).value = formatDataDate(calendarId);
 
-        const nextBtn = document.getElementById(`btnNext${calendarId}`);
-        const prevBtn = document.getElementById(`btnPrevious${calendarId}`);
         const yearSelector = document.getElementById(`yearSelector${calendarId}`);
-
-        [nextBtn, prevBtn].forEach((btn, index) => {
-            btn.addEventListener("click", function () {
-                const direction = index === 0 ? 1 : -1;
-                calendarState[calendarId].currentMonth += direction;
-                if (calendarState[calendarId].currentMonth > 11) {
-                    calendarState[calendarId].currentMonth = 0;
-                    calendarState[calendarId].currentYear++;
-                } else if (calendarState[calendarId].currentMonth < 0) {
-                    calendarState[calendarId].currentMonth = 11;
-                    calendarState[calendarId].currentYear--;
-                }
-                renderCalendar(calendarId, calendarState[calendarId].currentMonth, calendarState[calendarId].currentYear);
-            });
-        });
 
         yearSelector.addEventListener("change", function (e) {
             calendarState[calendarId].currentYear = parseInt(e.target.value);
-            renderCalendar(calendarId, calendarState[calendarId].currentMonth, calendarState[calendarId].currentYear);
+            renderCalendar(calendarId, calendarState[calendarId].currentMonth, calendarState[calendarId].currentYear, calendarState[calendarId].selectedDay);
         });
 
-        renderCalendar(calendarId, calendarState[calendarId].currentMonth, calendarState[calendarId].currentYear);
+        renderCalendar(calendarId, calendarState[calendarId].currentMonth, calendarState[calendarId].currentYear, calendarState[calendarId].selectedDay);
     }
+
+    // Toggle calendar function
+    window.toggleCalendar = function(calendarId) {
+        const calendarContainer = document.getElementById(`calendar${calendarId}`);
+        const calendarInput = document.getElementById(`dateInput${calendarId}`);
+        const isVisible = calendarContainer.style.display === 'flex';
+
+        // Hide all calendars
+        document.querySelectorAll('.calendar-container').forEach(function (dropdown) {
+            dropdown.style.display = 'none';
+        });
+
+        if (!isVisible) {
+            // Re-render the calendar using the selected day, month, and year from the state
+            const { selectedDay, selectedMonth, selectedYear } = calendarState[calendarId];
+            renderCalendar(calendarId, selectedMonth, selectedYear, selectedDay);
+            calendarContainer.style.display = 'flex';
+        } else {
+            calendarContainer.style.display = 'none';
+        }
+
+        // Click event to close calendar when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!calendarContainer.contains(event.target) && !calendarInput.contains(event.target)) {
+                calendarContainer.style.display = 'none';
+            }
+        });
+    };
 
     // Initialize the calendar
     initializeCalendar('AcceptDate');
@@ -209,22 +242,3 @@ document.addEventListener("DOMContentLoaded", function () {
     initializeCalendar('ClosingDate');
     initializeCalendar('PaymentDate');
 });
-
-function toggleCalendar(calendarId) {
-    const calendarContainer = document.getElementById(`calendar${calendarId}`);
-    const calendarInput = document.getElementById(`dateInput${calendarId}`);
-    const isVisible = calendarContainer.style.display === 'flex';
-
-    const allDropdowns = document.querySelectorAll('.calendar-container');
-    allDropdowns.forEach(function (dropdown) {
-        dropdown.style.display = 'none';
-    });
-
-    document.addEventListener('click', function(event) {
-        if (!calendarContainer.contains(event.target) && !calendarInput.contains(event.target)) {
-            calendarContainer.style.display = 'none';
-        }
-    });
-    
-    calendarContainer.style.display = isVisible ? 'none' : 'flex';
-}
