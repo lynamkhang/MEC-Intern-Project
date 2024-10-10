@@ -7,8 +7,6 @@
         <link rel="stylesheet" href="{% static 'secondpage.css' %}">
         <link rel="stylesheet" href="{% static 'combobox.css' %}">
         <link rel="stylesheet" href="{% static 'calendar.css' %}">
-        <script src="{% static 'combobox.js' %}"></script> 
-        <script src="{% static 'calendar.js' %}"></script> 
     </head>
     
     <body>
@@ -22,6 +20,8 @@
             {% include "components/Action.html" %}
         {% endif %}
         </div>
+        <script src="{% static 'combobox.js' %}"></script> 
+        <script src="{% static 'calendar.js' %}"></script> 
     </body>
     
 </html>

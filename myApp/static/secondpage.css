@@ -1,9 +1,14 @@
+@import url('colors.css');
+
 * {
     font-family: "Segoe UI", SegoeUI, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    box-sizing: border-box;
 }
 
 body {
-    background: linear-gradient(0deg, rgb(39, 60, 193), rgb(38, 179, 231)) no-repeat;
+    padding-top: 7px;
+    min-height: 100vh;
+    background: linear-gradient(to bottom, #26b3e7, #273cc1);
     overflow: hidden;
 }
 
@@ -20,6 +25,7 @@ body {
     padding: 8px;
     border: 1px solid rgb(210, 212, 212);
     border-radius: 10px;
+    max-height: 400px;
 }
 
 .item {
@@ -47,7 +53,7 @@ body {
 }
 
 input {
-    font-family: "Segoe UI";
+    font-family: "Segoe UI", SegoeUI, "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 12px;
 }
 
@@ -100,7 +106,8 @@ b {
     align-items: stretch; 
     gap: 0; 
     margin: 0; 
-    padding: 0 0 6px 0; 
+    padding: 0 0 6px 0;
+    max-height: 270px;
 }
 
 #personInfo, 
@@ -116,7 +123,7 @@ b {
 
 #personInfo {    
     margin: 6px 0 8px 8px;
-    grid-template-rows: repeat(7, 32px); 
+    grid-template-rows: repeat(5, 32px) 32px; 
     grid-template-areas: 
     
     "t  t   t   t   t     t     t      t    t      t    t      t  "
@@ -295,7 +302,7 @@ tbody {
 
 #applicationInfo {
     grid-template-columns: repeat(24, 1fr);
-    grid-template-rows: repeat(12, 2em);
+    grid-template-rows: repeat(12, 30px);
 
     grid-template-areas: 
     "nav    nav    nav    nav   nav   nav    nav    nav    nav    nav    nav    nav    nav    nav    nav    nav    nav    nav   nav    nav    nav   nav    nav    nav"
@@ -315,7 +322,8 @@ tbody {
 /*application-info items*/
 .navbar {
     background-color:rgb(243, 245, 246);         
-    display: flex;       
+    display: flex;
+    padding-top: 8px;    
     grid-area: nav;
 }
 
@@ -612,7 +620,7 @@ tbody {
     grid-area: scr;
     display: grid;
     grid-template-columns: repeat(24, 1fr);
-    grid-template-rows: repeat(5, 2em);
+    grid-template-rows: repeat(5, 30px);
     grid-template-areas: 
     "adn    adn    adn    ard   ard   ard    hhn    hhn    hhn    hnd    hnd    hnd    pbd    pbd    pbd    rbd    rbd    rbd   bth    bth    bth   bth    bth    bth"
     "prn    prn    pkn    pkn   nad   nad    nad    nad    nad    nad    nad    nad    prj    prj    prj    pjd    pjd    pjd   prp    prp    ppd   ppd    ppd    ppd"
@@ -691,7 +699,7 @@ tbody {
     cursor: pointer;
     padding: 6px 8px 6px 8px;
     width: 128px;
-    height: 32px;
+    height: 30px;
 }
 
 #btnClose {
@@ -719,5 +727,10 @@ tbody {
     font-size: 12px;
 }
 
+#draftPersonInfo,
+#registerPersonInfo 
+{
+    min-width: 35px;
+}
 
 

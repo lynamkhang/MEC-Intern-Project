@@ -1,220 +1,222 @@
+@import url('colors.css');
+ 
 .date-input {
     display: flex;
-    background-color: white;
-    border: 1px solid rgb(210, 212, 212);
+    background-color: var(--white);
+    border: 1px solid var(--border-gray);
     display: flex;
     align-items: center;
     justify-content: left;
     position: relative;
     cursor: pointer;
+    box-sizing: content-box;
 }
-
+ 
 .calendar-container {
     display: none;
     position: absolute;
-    max-width: 280px;
-    min-height: 100px;
-    border: 1px solid gray;
+    min-width: 230px;
+    height: auto;
+    padding: 3px 4px 3px 4px;
+    border: 1px solid var(--gray);
     border-radius: 3px;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    background-color: #FFFF;
+    background-color: var(--white);
     z-index: 100;
+    flex-direction: column;
+    box-shadow: 0 0 10px var(--box-shadow-rgba);
 }
-
+ 
 .calendar {
     width: 100%;
-    margin: 5px 4px 0 4px;
 }
-
-.calendar 
-.header {
+ 
+.calendar .header {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
-    background-color: #E9E9E9;
-    border-radius: 4px;
-    width: 100%;
-    height: 35px;
+    padding: 2px 2px 7px 2px;
+    height: 33px;
+    background: var(--light-gray);
+    border-radius: 5%;
 }
-
-.calendar 
-.header 
-.year-month {
+ 
+.calendar .header .year-month {
     display: flex;
     align-items: center;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: bold;
-    gap: 3px;
 }
-
+ 
 .month {
-    margin-top: 3px;
+    text-align: center;
+    font-weight: 600;
+    min-width: 25px;
+    max-height: 15px;
+    font-size: 12px;
 }
-
+ 
 .year-selector {
     appearance: none;
     -webkit-appearance: none;
-    -moz-appearance: none; 
-    background-color: #E9E9E9;
+    -moz-appearance: none;
+    background-color: var(--light-gray);
     border: none;
-    font-weight: bold;
-    font-size: 14px;
-    min-width: 45px;
+    font-size: 12px;
+    min-width: 30px;
     z-index: 101;
     cursor: pointer;
-}
-
-.calendar-body {
-    border: 2px solid lightblue;
-    width: 95%;
-    margin-bottom: 5px;
-}
-
-.weekdays {
-    display: flex;
-    gap: 10px;
-    padding: 10px;
-    justify-content: space-evenly;
-  }
-
-.weekdays .day {
-    width: 100%;
     text-align: center;
-    font-size: 14px;
-    font-weight: bold;
+    font-weight: 600;
 }
-
+ 
+.calendar-body {
+    width: 221px;
+    border: 2px solid var(--selected-bg);
+    padding: 1px 1px 2px 1px;
+}
+ 
+.weekdays {
+    padding: 6px 0px 6px 0px;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+ 
+.weekdays .day {
+    text-align: center;
+    padding: 8x;
+    color: var(--dark-gray);
+    font-weight: 600;
+    font-size: 13px;
+}
+ 
 .days {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1px;
-    justify-content: flex-start;
-    margin-left: 4px;
-    margin-bottom: 1px;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
 }
-
-.days 
-.day {
-    width: 29px;
-    height: 25px;
-    border: 1px solid #C8C8C8;
+ 
+.days .day {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-    font-size: 16px;
-    background-color: #F6F6F6;
-    padding-right: 5px;
+    justify-content: right;
+    text-align: center;
+    padding: 3px 3px 4px 4px;
+    margin: auto;
     cursor: pointer;
+    font-weight: 600;
+    min-width: 28px;
+    height: 24px;
+    transition: 0.2s;
+    border: 1px solid var(--border-c9);
+    font-size: 11px;
+    background: var(--light-background);
+    color: var(--dark-gray);
 }
-
-.days 
-.day.empty {
-    width: 29px;
+ 
+.days .day.empty {
+    min-width: 29px;
     height: 25px;
     gap: 0;
-    border: 1px solid #FFFF;
-    background-color: #FFFF;
+    border: 1px solid var(--white);
+    background-color: var(--white);
     cursor: default;
 }
-
-.days
+ 
 .day.current {
-    background-color: yellow;
+    background-color: var(--yellow);
 }
-
-.days
-.day.selected {
-    background-color: rgb(189, 215, 238);
+ 
+.days .day.selected {
+    background-color: var(--selected-bg);
 }
-
+ 
 #sunday {
-    color: red;
+    color: var(--red);
 }
-
+ 
 #saturday {
-    color: blue;
+    color: var(--blue);
 }
-
+ 
 .days .day.sunday {
-    color: red; 
+    color: var(--red);
 }
-
+ 
 .days .day.saturday {
-    color: blue; 
+    color: var(--blue);
 }
-
+ 
 /*Button*/
 .next-button,
 .previous-button {
-    width: 20px; 
-    height: 20px;
-    background-color: #EDEDED;
-    border: none; 
-    border-radius: 4px;
-    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative; 
+    border: none;
+    border-radius: 10%;
+    cursor: pointer;
+    width: 26px;
+    height: 24px;
+    background: transparent;
+    position: relative;
 }
-
-button:hover {
-    outline: 1px solid gray;
+ 
+.header button:hover {
+    background: var(--soft-gray);
+    box-shadow: 0 0 4px var(--hover-shadow);
 }
-
-.next-button {
-    margin-left: 50px;
-}
-
-.previous-button {
-    margin-right: 50px;
-}
-
-.circle { 
-    background-color: black;
+ 
+.circle {
+    width: 10px;
+    height: 10px;
+    background: var(--dark-gray);
     border-radius: 35%;
-    width: 12px;
-    height: 12px;
 }
-
+ 
 .triangle-next {
-    border-left: 4px solid white;
-    border-top: 4px solid transparent;
-    border-bottom: 4px solid transparent;
+    border-left: 3px solid var(--white);
+    border-top: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    margin: 1px 1px 0px 4px;
 }
-
+ 
 .triangle-previous {
-    border-right: 4px solid white;
-    border-top: 4px solid transparent;
-    border-bottom: 4px solid transparent;
+    border-right: 3px solid var(--white);
+    border-top: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    margin: 1px 4px 0px 1px;
 }
-
+ 
 .next-button .triangle-next {
     position: absolute;
-    left: 9px; /* Adjust to position the triangle */
+    left: 8px;
+    /* Adjust to position the triangle */
 }
-
+ 
 .next-button .circle {
     position: absolute;
-    right: 4px; /* Adjust to position the circle */
+    right: 8px;
+    /* Adjust to position the circle */
 }
-
+ 
 .previous-button .triangle-previous {
     position: absolute;
-    right: 9px; /* Adjust to position the triangle */
+    right: 8px;
+    /* Adjust to position the triangle */
 }
-
+ 
 .previous-button .circle {
     position: absolute;
-    left: 4px; /* Adjust to position the circle */
+    left: 8px;
+    /* Adjust to position the circle */
 }
-
+ 
 .date-display {
     width: 85%;
-    height: 25px;
-    border: 1px solid lightblue;
-    border-radius: 0; 
-    margin-bottom: 2px;
+    height: 27px;
+    border: 1px solid var(--light-blue);
+    border-radius: 0;
 }

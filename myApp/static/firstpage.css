@@ -7,7 +7,9 @@
 }
 
 body {
-    background: linear-gradient(0deg, rgb(39, 60, 193), rgb(38, 179, 231) 80%) no-repeat;
+    height: 100%;
+    min-height: 100vh;
+    background: linear-gradient(to bottom, #26b3e7, #273cc1);
     padding: 0 0 32px 0;
 }
 

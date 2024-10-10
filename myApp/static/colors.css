@@ -1,0 +1,18 @@
+:root {
+    --white: #ffffff;
+    --black: #000000;
+    --light-gray: #e9e9e9;
+    --soft-gray: #EDEDED;
+    --gray: gray;
+    --dark-gray: #434343;
+    --light-blue: lightblue;
+    --border-gray: rgb(210, 212, 212);
+    --blue: blue;
+    --red: red;
+    --yellow: rgb(255, 255, 0);
+    --selected-bg: rgb(189, 215, 238);
+    --light-background: #f6f6f6;
+    --border-c9: #c9c9c9;
+    --box-shadow-rgba: rgba(0, 0, 0, 0.3);
+    --hover-shadow: rgba(0, 0, 0, 0.2);
+  }
